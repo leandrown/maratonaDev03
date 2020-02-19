@@ -1,0 +1,12 @@
+# This file is the top-most EditorConfig file
+# See more options at: https://editorconfig.org/
+
+root = true
+
+[*.{js,html,css,scss}]
+charset = utf-8
+end_of_line = crlf
+indent_style = spaces
+indent_size = 3
+insert_final_newline = true
+trim_trailing_whitespace = true
