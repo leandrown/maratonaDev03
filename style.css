@@ -55,6 +55,13 @@ section.form {
    grid-template-columns: 1fr 1fr;
    align-items: center;
    border-radius: 6px;
+   transition: all 300ms;
+}
+section.form.hide {
+   margin-top: -70px;
+   opacity: 0;
+   visibility: hidden;
+   height: 0;
 }
 form input, form button {
    width: 100%;
