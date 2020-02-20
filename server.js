@@ -8,6 +8,16 @@ server.use(express.static('public'));
 // habilitar o corpo/body do formulario
 server.use(express.urlencoded({ extended: true }));
 
+// configurar a conexao com o banco de dados PostgreSQL
+const Pool = require('pg').Pool; // Pool mantem a conexao ativa, sem precisar fazer autenticacao a todo momento no banco
+const db = new Pool({
+   user: 'postgres',
+   password: 'm1n3cr@wl3r',
+   host: 'localhost',
+   port: 5432,
+   database: 'doeagasalho'
+});
+
 // configurar a template engine
 nunjucks.configure('./', { express: server, noCache: true });
 
