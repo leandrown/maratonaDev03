@@ -21,29 +21,34 @@ const db = new Pool({
 // configurar a template engine
 nunjucks.configure('./', { express: server, noCache: true });
 
-// Lista de doadores: Vetor ou Array
-const donors = [
-   {
-      name: "Adriana Vieira",
-      blouse: "Blusinha"
-   },
-   {
-      name: "Leandro Vieira",
-      blouse: "Blusa"
-   },
-   {
-      name: "Carlos Alberto",
-      blouse: "Calça Moletom"
-   },
-   {
-      name: "Solange Paulino",
-      blouse: "Blusa de Capuz"
-   }
-];
+// // Lista de doadores: Vetor ou Array
+// const donors = [
+//    {
+//       name: "Adriana Vieira",
+//       blouse: "Blusinha"
+//    },
+//    {
+//       name: "Leandro Vieira",
+//       blouse: "Blusa"
+//    },
+//    {
+//       name: "Carlos Alberto",
+//       blouse: "Calça Moletom"
+//    },
+//    {
+//       name: "Solange Paulino",
+//       blouse: "Blusa de Capuz"
+//    }
+// ];
 
 // configurar a apresentacao da pagina
 server.get('/', function(req, res) {
-   return res.render('index.html', { donors });
+   db.query('SELECT * FROM donors', function(err, result) {
+      if (err) return res.send('Erro de banco de dados.');
+
+      const donors = result.rows;
+      return res.render('index.html', { donors });
+   });
 });
 
 server.post('/', function(req, res) {
@@ -52,9 +57,18 @@ server.post('/', function(req, res) {
    const email = req.body.email;
    const blouse = req.body.blouse;
 
-   donors.push({ name, blouse });
+   // donors.push({ name, blouse });
 
-   return res.redirect('/');
+   if (name == '' || email == '' || blouse == '') {
+      return res.send('Todos os campos são obrigatórios.');
+   }
+
+   const query = `INSERT INTO donors ("name", "email", "blouse") VALUES ($1, $2, $3)`;
+   db.query(query, [name, email, blouse], function(err) {
+      if (err) return res.send('Erro no banco de dados.');
+
+      return res.redirect('/');
+   });
 });
 
 // ligar o servidor e permitir o acesso na porta 3000
