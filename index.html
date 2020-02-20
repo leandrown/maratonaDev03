@@ -15,7 +15,7 @@
       </header>
       <section class="form hide">
          <h2>Entre na lista de doadores</h2>
-         <form action="/">
+         <form action="/" method="POST">
             <input type="text" name="name" placeholder="Nome completo">
             <input type="text" name="email" placeholder="Email">
             <input type="text" name="blouse" placeholder="Tipo de agasalho">
@@ -25,22 +25,12 @@
       <main>
          <h2>Últimos <span>doadores</span></h2>
          <section class="donors">
-            <div class="donor">
-               <div class="blouse">Blusinha</div>
-               <p>Adriana Vieira</p>
-            </div>
-            <div class="donor">
-               <div class="blouse">Blusa</div>
-               <p>Leandro Vieira</p>
-            </div>
-            <div class="donor">
-               <div class="blouse">Calça Moletom</div>
-               <p>Carlos Alberto</p>
-            </div>
-            <div class="donor">
-               <div class="blouse">Blusa de Capuz</div>
-               <p>Solange Paulino</p>
-            </div>
+            {% for donor in donors %}
+               <div class="donor">
+                  <div class="blouse">{{donor.blouse}}</div>
+                  <p>{{donor.name}}</p>
+               </div>
+            {% endfor %}
          </section>
       </main>
       <footer>Com ❤️ Mandrillus</footer>
